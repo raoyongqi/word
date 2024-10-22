@@ -6,6 +6,9 @@
 \geometry{a4paper, margin=1in}
 \usepackage{ctex}  % 处理中文支持
 \usepackage{booktabs}
+\usepackage{listings}
+
+
 
 \title{基于机器学习的植物病害分析与预测模型构建}
 \author{}
@@ -386,7 +389,7 @@
 		prec\_07 & 0.2021 \\ 
 		\bottomrule
 	\end{tabular}
-	\caption{R² 值大于 0.2 的自变量}
+
 	
 
 \end{table}
@@ -406,15 +409,51 @@
 
 		
 	\subsection{模型比较}
-	通过比较神经网络，LightGBM等模型，可以发现LightGBM训练速度最快，神经网络拟合效果最好。
-	
-	\subsection{预测结果}
-	
-	
-	通过随机森林预测，内蒙古东北北部，四川北部地区存在较高的植物病害，西藏的大部分地区，内蒙古中部存在较低的植物病害，内蒙古中部的植物病害会随着气候变化而增加，青海南部的植物病害会随着气候变化而降低。
-		
-	随着年均温的增加，植物病害有下降的趋势，随着年降水的增加，植物病害有上升的趋势。
-	根据shap图中的特征按重要性排序，LON、LAT、srad\_07 等是对模型影响最大的特征。实际植物病害较低的预测结果比较准确。实际植物病害较高的预测值与实际值偏离较大。
-	
+
+\subsubsection{操作步骤}
+首先，导入所需的库，包括\texttt{pandas}用于数据处理，\texttt{numpy}用于数值计算，\texttt{os}用于处理目录操作，\texttt{xgboost}和\texttt{lightgbm}用于模型训练，\texttt{sklearn}中的\texttt{RandomForestRegressor}和\texttt{LinearRegression}用于不同的回归模型，\texttt{train\_test\_split}用于分割数据集，\texttt{mean\_squared\_error}和\texttt{r2\_score}用于评估模型性能，\texttt{tensorflow.keras}用于构建和训练神经网络，\texttt{matplotlib}和\texttt{seaborn}用于可视化。接着，设置字体以便支持中文字符显示，并解决负号显示的问题。
+
+然后，加载Excel文件中的数据，并选择特征列，这些列以\texttt{\_resampled}结尾，或以\texttt{wc}开头，或是经纬度列\texttt{LON}和\texttt{LAT}。将特征数据赋值给变量\texttt{X}，目标变量\texttt{PL}赋值给\texttt{y}。接着，将数据集分割为训练集和测试集，比例为80\%和20\%。使用\texttt{StandardScaler}对特征数据进行标准化处理，以便提高模型的训练效果。
+
+接下来，构建一个神经网络模型，包含两层隐藏层，每层分别有64个和32个神经元，激活函数为ReLU，输出层用于回归任务。编译模型时，损失函数使用均方误差，优化器选择Adam。之后，训练神经网络模型，设置训练轮次为50，批次大小为10，并设置不输出训练过程的详细信息。
+
+接着，使用测试集对训练好的神经网络模型进行预测，并评估模型性能。同时，训练其他三种模型，包括XGBoost回归模型、随机森林回归模型和LightGBM回归模型，分别进行训练和预测。接着，将所有模型的预测结果准备好用于可视化。
+
+为了便于保存输出，检查输出目录是否存在，不存在则创建。然后，针对每个模型，绘制散点图和密度图，显示真实值与预测值的关系，并用线性回归模型拟合预测结果。绘制理想的y=x参考线，设置坐标轴标签和标题，并调整图像的显示范围和布局。最后，将每个图像保存为PNG格式，并选择性地展示每个绘制的图像。
+通过比较神经网络，LightGBM等模型，可以发现LightGBM训练速度最快，神经网络拟合效果最好。
+
+\subsection{预测结果}
+
+\subsubsection{下载cmip6数据}
+首先，确保安装和加载所需的R包，使用\texttt{remotes}包来从GitHub安装\texttt{geodata}包。在加载\texttt{geodata}包后，使用\texttt{getwd()}获取当前工作目录，并通过\texttt{setwd()}设置工作目录为\texttt{"C:/Users/r/Desktop/cmip6"}，以便后续数据下载和存储都在该目录下。
+
+接下来，定义模型、情景和变量。这里仅指定一个模型\texttt{"ACCESS-CM2"}，并设置情景为\texttt{"126"}、\texttt{"245"}、\texttt{"370"}和\texttt{"585"}，选择需要下载的变量\texttt{"tmin"}、\texttt{"tmax"}、\texttt{"prec"}和\texttt{"bioc"}。时间范围设定为\texttt{"2021-2040"}、\texttt{"2041-2060"}、\texttt{"2061-2080"}和\texttt{"2081-2100"}，并指定数据保存路径为\texttt{"CMIP6"}。
+
+在下载数据之前，检查主目录\texttt{CMIP6}是否存在，如果不存在则使用\texttt{dir.create()}创建该目录。接下来，定义一个名为\texttt{download\_data}的函数，该函数接受模型、情景和时间范围作为参数。在函数内部，根据模型和情景构建文件夹路径，并使用\texttt{dir.create()}创建相应的文件夹。
+
+然后，针对每个变量，构建文件名和下载URL。文件名格式为
+\begin{lstlisting}
+	"wc2.1_5m_var_model_ssp_scenario_time_range.tif"
+\end{lstlisting}
+，下载URL则是将模型、情景和变量插入到相应位置。接下来，检查下载路径是否已存在该文件。如果文件已经存在，输出相应的信息；如果文件不存在，则尝试下载该文件，并处理下载过程中可能出现的错误。如果下载成功，则输出下载成功的信息。
+
+最后，使用嵌套循环遍历模型、情景和时间范围，调用\texttt{download\_data}函数进行数据下载。通过这一系列步骤，可以有效地批量下载指定模型和情景下的气候数据，并将数据保存在指定的目录结构中。
+
+
+\subsubsection{栅格数据比较}
+首先，导入所需的库，包括 \texttt{rasterio} 和 \texttt{numpy}。接下来，指定输入的两个 TIFF 文件路径，其中第一个文件 \texttt{tiff\_file1} 为 \texttt{'cropped\_data/result/cropped\_cmip6\_rf.tif'}，第二个文件 \texttt{tiff\_file2} 为 \texttt{'cropped\_data/result/cropped\_predicted\_rf.tif'}，同时指定输出文件路径 \texttt{output\_file} 为 \texttt{'cropped\_data/result/sub\_rf.tif'}。然后，使用 \texttt{rasterio.open()} 函数打开第一个 TIFF 文件，并读取其第一波段的数据，同时获取文件的元数据并存储在变量 \texttt{profile} 中。接着，使用相同的方式打开第二个 TIFF 文件，并读取其第一波段的数据。
+
+在读取完数据后，确保两个数据数组的形状相同。如果两个数组的形状不匹配，则抛出一个 \texttt{ValueError} 错误。之后，执行相减运算，计算 \texttt{data1} 与 \texttt{data2} 的差值，并将结果存储在 \texttt{result\_data} 中。
+
+接下来，更新输出文件的元数据 \texttt{profile}，可以根据需要修改数据类型为 \texttt{'float32'}，并将波段数设置为 1，因为输出文件只包含一个波段。最后，使用 \texttt{rasterio.open()} 函数以写入模式打开输出文件，并将计算结果写入到新的 TIFF 文件中。完成后，打印输出文件的路径，确认输出操作已成功执行。
+
+
+
+\subsubsection{结果}
+通过随机森林预测，内蒙古东北北部，四川北部地区存在较高的植物病害，西藏的大部分地区，内蒙古中部存在较低的植物病害，内蒙古中部的植物病害会随着气候变化而增加，青海南部的植物病害会随着气候变化而降低。
+
+随着年均温的增加，植物病害有下降的趋势，随着年降水的增加，植物病害有上升的趋势。
+根据shap图中的特征按重要性排序，LON、LAT、srad\_07 等是对模型影响最大的特征。实际植物病害较低的预测结果比较准确。实际植物病害较高的预测值与实际值偏离较大。
+
 
 \end{document}
