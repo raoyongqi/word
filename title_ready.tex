@@ -342,12 +342,14 @@ Deepa S. Pureswaran 等人（2024）探讨了气候变化对森林害虫的影�
 		
 		通过以上步骤，你将能够在 ArcGIS Pro 中创建和导出一张专业的数字高程模型图，清晰展示地形信息。
 		
-		
-		
+						\subsubsection{获取城市有关的信息}
+首先，确保拥有有效的高德地图API密钥。然后，通过调用高德地图的“config/district”接口，以甘肃省作为关键词，获取该省下属的地级市名称。接下来，对每个获取到的地级市名称，使用“geocode/geo”接口查询其经纬度，并设置重试机制以防请求失败时能够重新尝试获取数据。在成功获取城市名称及对应的经纬度后，将这些数据存储在一个列表中。最后，创建一个名为“gansu\_cities.csv”的文件，并将城市名称、经度和纬度写入该文件，以便后续使用。在整个过程中，要添加适当的延时以避免请求过快而被限制，同时对请求错误进行处理，以确保程序的稳定运行。通过这些步骤，能够成功获取甘肃省的地级市及其位置数据，并将结果保存为CSV文件。
+\subsubsection{绘制经纬度网格}
+首先，打开ArcGIS Pro并加载你的地图项目。接着，在顶部菜单栏中点击“插入”选项卡，然后选择“网格”中的“地图网格”。这将会在“内容”窗格中生成一个新的网格图层。之后，右键点击该网格图层，选择“属性”以打开设置窗口。在设置窗口中，可以调整网格线的主要和次要间隔以控制网格的密度和样式。调整完成后，地图上会更新显示新的网格线。最后，在布局视图中可以进一步自定义网格的外观和位置。完成这些步骤后，记得保存你的项目以保留所做的更改。
 				\subsubsection{结果}
 
 
-			\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/gansu_dem3.png} % 自动保持纵横比
+			\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/gansu.png} % 自动保持纵横比
 			
 			\begin{comment}
 						\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/xinjiang_dem.png} % 自动保持纵横比
