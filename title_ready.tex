@@ -579,6 +579,66 @@ Deepa S. Pureswaran 等人（2024）探讨了气候变化对森林害虫的影�
 			\centering
 			\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/sichuan_land_use_4.png} % 自动保持纵横比
 		\end{figure}
+		
+		
+		\subsubsection{绘制一个椭圆}
+		
+		\[
+		x(\theta) = a \cdot \cos(\theta)
+		\]
+		\[
+		y(\theta) = b \cdot \sin(\theta)
+		\]
+		\subsubsection{植被覆盖度计算}
+		在遥感研究中，植被覆盖度是衡量地表植被生长状况的重要指标，通常通过归一化植被指数（NDVI）来计算。在本研究中，植被覆盖度 \( C_i \) 通过对 NDVI 数据进行归一化处理来估算。具体来说，植被覆盖度的计算公式如下：
+		
+		\[
+		C_i = \frac{\text{NDVI}_{i} - \text{NDVI}_{\text{min}}}{\text{NDVI}_{\text{max}} - \text{NDVI}_{\text{min}}}
+		\]
+		
+		其中，\( \text{NDVI}_{i} \) 表示在某一时刻或某个像素位置的 NDVI 值，\( \text{NDVI}_{\text{min}} \) 是在选定时间范围内研究区域所有像素的最小 NDVI 值，而 \( \text{NDVI}_{\text{max}} \) 是该区域内所有像素的最大 NDVI 值。该公式通过将每个像素的 NDVI 值与该区域内的最小值和最大值进行归一化，从而将 NDVI 值转换为一个介于 0 和 1 之间的比例值，表示该像素的植被覆盖度。
+		
+		归一化后的植被覆盖度 \( C_i \) 值的范围从 0 到 1，其中 \( C_i = 0 \) 表示该区域没有植被或植被极其稀少，而 \( C_i = 1 \) 则表示该区域的植被覆盖度达到了最大值。该方法能够有效地消除不同时间和地点 NDVI 值的差异，使得植被覆盖度在不同区域之间具有可比性。通过该归一化过程，植被覆盖度的估算不仅可以反映出土地表面植被的生长状况，还能够为生态监测、环境评估以及土地利用变化分析等研究提供重要的参考数据。
+				
+		\subsubsubsection{甘肃省的植被覆盖度}
+		
+				\begin{figure}[H]  % 使用 [H] 来强制图片在此处显示
+			\centering
+			\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/gansu_fill3.png} % 自动保持纵横比
+		\end{figure}
+		\subsubsubsection{新疆地区的植被覆盖度}
+		\begin{figure}[H]  % 使用 [H] 来强制图片在此处显示
+	\centering
+	\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/xinjiang_fill2.png} % 自动保持纵横比
+\end{figure}
+		\subsubsubsection{青海省的植被覆盖度}
+		\begin{figure}[H]  % 使用 [H] 来强制图片在此处显示
+	\centering
+	\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/qinghai_fill3.png} % 自动保持纵横比
+\end{figure}	
+		\subsubsubsection{四川省的植被覆盖度}
+		\begin{figure}[H]  % 使用 [H] 来强制图片在此处显示
+	\centering
+	\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/sichuan_fill3.png} % 自动保持纵横比
+\end{figure}
+
+
+
+		\subsubsubsection{内蒙古自治区的植被覆盖度}
+					\begin{figure}[H]  % 使用 [H] 来强制图片在此处显示
+		\centering
+		\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/neimeng_fill2.png} % 自动保持纵横比
+	\end{figure}
+	
+		
+		\subsubsubsection{西藏自治区的植被覆盖度}
+				\begin{figure}[H]  % 使用 [H] 来强制图片在此处显示
+			\centering
+			\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/xizang_fill2.png} % 自动保持纵横比
+		\end{figure}
+		
+		
+		
 		\subsubsection{植被指数计算}
 		
 				
