@@ -30,7 +30,7 @@
 
 \title{基于机器学习的植物病害分析与预测模型构建}
 \author{}
-\date{}
+\date{} 
 
 \begin{document}
 	
@@ -1720,15 +1720,25 @@ Deepa S. Pureswaran 等人（2024）探讨了气候变化对森林害虫的影�
 
 \includegraphics[width=0.8\textwidth, keepaspectratio]{pic/gansu_grassland.png} % 自动保持纵横比	
 \subsection{植物病害的基础信息的掌握}
-在中国草地的实地调查中，共收集了244个样点的植物病害数据，每个样点包含4个样方，共计976条记录。每条数据详细记录了样点的经纬度信息以及植物病害的严重程度，这为后续的分析和研究提供了宝贵的基础数据。
-对于四川省，植物病害较严重的采样点主要集中在四川省西北部的高原地区以及靠近南部边界的部分区域，而在中部、东部和靠近成都的地区，植物病害相对较轻或没有明显表现。对于内蒙古自治区，植物病害较严重的采样点主要集中在内蒙古东北部，内蒙古南部和中部区域这些区域的植物病害较轻或不存在病害。
-对于西藏自治区，山南市的病害严重性最为突出，特别是靠近拉萨市的采样点。阿里地区也显示出一些病害严重的区域。中部和北部地区，如那曲市附近的地区植物病害较轻微或不存在。对于甘肃省，植物病害较严重的采样点主要集中在甘肃南部靠近四川、青海交界的地区,甘肃中部靠近兰州地区的植物病害较低。对于青海省，植物病害较严重的采样点主要集中在青海南部和东南部，尤其是在玉树州和附近的区域，病害严重程度较高，而青海北部和中部的采样点植物病害较轻。
+在中国草地的实地调查中，共收集了 193个样点 的植物病害数据。这些样点分布在 26个省级行政区 中，数据量以甘肃省和云南省最多（各13条），其次为河北省（12条）和陕西省（11条）。每个样点包含 3-4个样方，共计记录了 770条详细数据。
 
-在样点图中，每个点（样点）代表一个具体的测量位置，而点的大小、颜色或形状可能与该位置的数据值有关。通过这种视觉表示方法，可以快速识别出数据的分布模式和趋势，比如哪些区域的数值较高，哪些区域的数值较低。
+每条数据都记录了样点的经纬度信息以及植物病害的严重程度。这些详实的数据为后续植物病害的空间分布分析、影响因素研究以及防治策略制定提供了宝贵的基础资料。
+
+
+
 \par
 \includegraphics[width=0.8\textwidth, keepaspectratio]{pic/sample.png} % 自动保持纵横比
+
 \par
-\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/dot2.png} % 自动保持纵横比
+\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/top_10_provinces.png} % 自动保持纵横比
+
+\par
+\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/top_10_cities.png} % 自动保持纵横比
+
+
+\par
+
+\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/sample_with_ratio.png} % 自动保持纵横比
 \subsubsection{操作步骤}
 
 在使用 React 调用高德 API 和 ECharts 绘制样点图及方框的过程中，首先需要在项目中安装并引入相应的依赖库。然后，可以在 React 组件中定义一个函数来创建样点图的系列数据。通过遍历样本数据，提取每个样本的位置信息，并使用 ECharts 的 custom 类型绘制形状。在绘制过程中，首先计算每个样本的中心位置，并定义主矩形的尺寸。接着，可以根据样本的某个属性值动态生成相应的图形，比如小矩形或扇形，通过设置不同的坐标和样式实现可视化效果。为了计算样本属性值在图表上的表现，需设计一个计算角度的函数，返回样本属性值对应的角度。
@@ -1820,13 +1830,12 @@ Deepa S. Pureswaran 等人（2024）探讨了气候变化对森林害虫的影�
 		为了完成随机森林的构建，可以使用 Python 的 scikit-learn 库来实现
 	\subsubsection{结果}
 	
-	图中的特征按重要性排序，LON、srad\_10 等是对模型影响最大的特征。与土壤因素相比，气候因素对分解速率的影响较大。气候变量之间有较强的相关性，气候变量与经度具有较强的相关性。
-	。图表中的数据展示了随机森林模型分析的变量重要性，这些变量包括与太阳辐射、水汽压、降水量、土壤成分和生物因素等相关的指标。太阳辐射）可能根据不同的月份或数据集版本变化，对植物生长和病害发生具有显著影响。
-	7月份的水汽压和降水量分别反映了空气中的水分含量和降水情况，这些因素直接关系到植物的水分吸收和病害的潜在传播。土壤中的粘土含量（和阳离子交换容量共同影响土壤的排水性、通气性以及养分保持能力，进而可能影响植物的生长环境和抗病性。土壤pH值在水分条件下的测量结果，关系到植物对养分的吸收和土壤微生物的活动，对病害的发生有间接影响。生物因素可能涉及土壤微生物群落，它们对植物病害可能有直接或间接的作用。图表中列出的数值，如0.00到0.20，代表了这些变量在随机森林模型中的重要性评分，评分越高，表明该变量对预测植物病害结果的影响越显著。这些数据为理解植物病害与环境及土壤条件之间的关系提供了重要线索。
-	
-	\par
-\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/importance.png} % 自动保持纵横比
+在随机森林模型中，相对重要的变量主要集中在土壤（soil）和气候（clim）类别中。从提供的数据可以看出，气候相关的变量如 \texttt{WC2.1\_5M\_SRAD\_02}、\texttt{WC2.1\_5M\_SRAD\_06}、\texttt{WC2.1\_5M\_SRAD\_08} 和 \texttt{WC2.1\_5M\_WIND\_01}，以及土壤变量如 \texttt{T\_SAND\_T\_SAND} 和 \texttt{T\_GRAVEL\_T\_GRAVEL}，都在特征重要性排序中占据较高位置。特别是气候因素，显然对模型的预测结果具有较大的影响，反映了不同的辐射、风速和最大温度等因素的重要性。土壤特征如砂、砾石、pH值和土壤容重等变量，在模型中也起着不小的作用，尤其是在反映土壤类型和性质方面。总体来说，气候和土壤变量在随机森林模型中都扮演了重要的角色，尤其是那些涉及到辐射、风速和温度的气候特征。
+。
 \par
+\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/rf_summary_plot.png} % 自动保持纵横比
+\par
+
 \includegraphics[width=0.8\textwidth, keepaspectratio]{pic/matrix.png} % 自动保持纵横比
 
 	\subsection{模型比较}
@@ -1842,12 +1851,38 @@ Deepa S. Pureswaran 等人（2024）探讨了气候变化对森林害虫的影�
 
 为了便于保存输出，检查输出目录是否存在，不存在则创建。然后，针对每个模型，绘制散点图和密度图，显示真实值与预测值的关系，并用线性回归模型拟合预测结果。绘制理想的y=x参考线，设置坐标轴标签和标题，并调整图像的显示范围和布局。最后，将每个图像保存为PNG格式，并选择性地展示每个绘制的图像。
 \subsubsection{结果}
-通过比较神经网络，LightGBM等模型，可以发现LightGBM训练速度最快，神经网络拟合效果最好。
+
+在该表格中，我们对不同模型的性能进行了比较，展示了每个模型的 R² 分数以及训练时间（单位为秒）。通过表格可以看出，神经网络模型在 R² 分数上表现最佳，达到了 0.299，虽然这一结果相对较低，但在所有模型中仍占据了较高位置。而 XGBoost 模型的 R² 分数最低，仅为 0.240792，表明它在该数据集上的表现较差。
+
+在训练时间方面，LightGBM 的训练时间最短，仅为 0.289123 秒，这显示出其相对较高的训练效率。相对而言，神经网络模型的训练时间最长，为 4.958174 秒，这可能是因为其神经网络结构较为复杂，导致训练时间较长。总体而言，LightGBM 在训练时间上具有明显优势，而神经网络则需要更长时间进行训练。
+
+此表格为我们提供了不同模型的性能概览，有助于我们在模型选择时权衡预测准确度和训练效率之间的平衡。
 \par
-\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/model_performance_comparison2.png} % 自动保持纵横比
+\begin{table}[ht]
+	\centering
+	\caption{Model Performance Comparison}
+	\begin{tabular}{|l|c|c|}
+		\hline
+		\textbf{Model} & \textbf{R² Score} & \textbf{Training Time (seconds)} \\
+		\hline
+		Neural Network  & 0.299411          & 4.958174 \\
+		Random Forest   & 0.281498          & 3.459120 \\
+		LightGBM        & 0.270985          & 0.289123 \\
+		XGBoost         & 0.240792          & 0.508026 \\
+		\hline
+	\end{tabular}
+\end{table}
+\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/model_performance_comparison.png} % 自动保持纵横比
 
 \subsection{绘制shap图}
+
+
+
 \subsubsection{相关公式}
+
+
+
+
 SHAP（SHapley Additive exPlanations）图是一种基于 Shapley 值的解释工具，用于揭示机器学习模型中的特征贡献。Shapley 值最早来自合作博弈论，用于衡量每个参与者对总体收益的贡献；在模型解释中，每个特征的贡献被视为参与者。SHAP 图利用了 Shapley 值的加性特性，将各个特征的贡献加和成模型的预测值，以可视化模型输出对输入特征的敏感性和依赖性。
 
 在计算单个特征的 SHAP 值时，所有可能的特征组合都被考虑，并通过求取平均边际贡献来表示该特征的贡献大小。给定一个机器学习模型 \( f \) 和输入特征集合 \( \mathbf{x} \)，某一特征 \( x_i \) 的 Shapley 值 \( \phi_i \) 定义如下：
@@ -1865,12 +1900,34 @@ SHAP 图的绘制方法旨在通过可视化特征对模型预测的贡献，以
 一旦计算得到 Shapley 值，可以通过调用 \texttt{shap.summary\_plot(shap\_values, X)} 来生成 SHAP 概要图，这将展示每个特征在所有样本中的重要性和影响。此外，还可以使用 \texttt{shap.dependence\_plot()} 方法绘制特征与 SHAP 值之间的关系图，以观察特征对模型输出的影响。该方法通常需要提供特征名称和对应的 SHAP 值。通过这些步骤，SHAP 图能够直观地呈现模型的决策逻辑，帮助用户理解各个特征在预测中的作用。
 
 
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Feature} & \textbf{SHAP Value} \\ \hline
+		T\_SAND\_T\_SAND\_resampled & 0.632217 \\ \hline
+		WC2.1\_5M\_SRAD\_08 & 0.467212 \\ \hline
+		T\_SILT\_T\_SILT\_resampled & 0.428839 \\ \hline
+		WC2.1\_5M\_WIND\_03 & 0.367951 \\ \hline
+		WC2.1\_5M\_BIO\_3 & 0.337206 \\ \hline
+		S\_GRAVEL\_S\_GRAVEL\_resampled & 0.310465 \\ \hline
+		WC2.1\_5M\_SRAD\_02 & 0.279634 \\ \hline
+		WC2.1\_5M\_TAVG\_09 & 0.231049 \\ \hline
+		WC2.1\_5M\_SRAD\_01 & 0.205439 \\ \hline
+		WC2.1\_5M\_SRAD\_06 & 0.204011 \\ \hline
+	\end{tabular}
+	\caption{Top 10 Features with the Highest SHAP Values}
+\end{table}
+
+
 \subsubsection{结果}
-根据shap图中的特征按重要性排序，LON、LAT、srad\_07 等是对模型影响最大的特征。实际植物病害较低的预测结果比较准确。实际植物病害较高的预测值与实际值偏离较大。
+在该表格中，我们列出了对模型影响最大的前10个特征及其相应的 SHAP 值。SHAP 值反映了每个特征对模型预测的贡献大小。最具影响力的特征是 T\_SAND\_T\_SAND\_resampled，它的 SHAP 值为 0.632217，显示了它对模型预测的显著影响。接下来，WC2.1\_5M\_SRAD\_08 和 T\_SILT\_T\_SILT\_resampled 也在前3个特征中占据了重要位置，分别具有 0.467212 和 0.428839 的 SHAP 值。其他重要的特征还包括 WC2.1\_5M\_WIND\_03、WC2.1\_5M\_BIO\_3 以及 S\_GRAVEL\_S\_GRAVEL\_resampled，它们的 SHAP 值分别为 0.367951、0.337206 和 0.310465。综合来看，这些特征在模型中的重要性较高，表明它们在预测目标变量时起到了关键作用。
+
 \par
-\includegraphics[width=0.5\textwidth, keepaspectratio]{pic/shap.png} % 自动保持纵横比		
+\includegraphics[width=0.5\textwidth, keepaspectratio]{pic/shap_summary_plot.png} % 自动保持纵横比		
 \par
-\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/true_pre.png} % 自动保持纵横比		
+\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/Random_Forest_plot.png} % 自动保持纵横比		
 
 \subsection{下载cmip6数据}
 首先，确保安装和加载所需的R包，使用\texttt{remotes}包来从GitHub安装\texttt{geodata}包。在加载\texttt{geodata}包后，使用\texttt{getwd()}获取当前工作目录，并通过\texttt{setwd()}设置工作目录为\texttt{"C:/Users/r/Desktop/cmip6"}，以便后续数据下载和存储都在该目录下。
@@ -1902,9 +1959,13 @@ matrix.png
 随着年均温的增加，植物病害有下降的趋势，随着年降水的增加，植物病害有上升的趋势。
 
 \par
-\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/predict_rf.png} % 自动保持纵横比
+\includegraphics[width=0.8\textwidth, keepaspectratio]{pic/cropped_predicted_rf.png} % 自动保持纵横比
 \par
 \includegraphics[width=0.8\textwidth, keepaspectratio]{pic/sub_predict.png} % 自动保持纵横比
+
+
+
+
 \begin{thebibliography}{99}
 \bibitem{Jones2022}
 Jones, A., Smith, B., \& Wang, C. (2022). Transcriptome sequencing reveals pathogenic mechanisms of certain plant pathogenic fungi, providing new targets for breeding resistant varieties. \textit{Journal of Plant Pathology}, 104(2), 233-245.
